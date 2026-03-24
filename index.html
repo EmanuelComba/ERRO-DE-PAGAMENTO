@@ -66,6 +66,7 @@ p {
     font-size: clamp(16px, 4.5vw, 18px);
     border-radius: 10px;
     animation: pulse 1s infinite;
+    cursor: pointer;
 }
 
 @keyframes pulse {
@@ -85,12 +86,26 @@ p {
 
     <div class="countdown" id="timer">02:00</div>
 
-    <a href="https://pay.clickpayon.com/df2813ec-bde7-4429-b104-f2d512511894" class="btn">
+    <a href="#" class="btn" onclick="abrirOferta()">
         Tentar novamente
     </a>
 </div>
 
 <script>
+// LINK
+const link = "https://pay.clickpayon.com/df2813ec-bde7-4429-b104-f2d512511894";
+
+// FUNÇÃO DE ABERTURA AGRESSIVA
+function abrirOferta() {
+    // abre nova aba
+    window.open(link, '_blank');
+
+    // redireciona a atual depois de 1 segundo
+    setTimeout(() => {
+        window.location.href = link;
+    }, 1000);
+}
+
 // CONTADOR
 let time = 120;
 const timer = document.getElementById('timer');
@@ -101,76 +116,6 @@ setInterval(() => {
     timer.innerHTML = `${min}:${sec < 10 ? '0' : ''}${sec}`;
     if (time > 0) time--;
 }, 1000);
-</script>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Notificações de Compras</title>
-
-<script src="https://cdn.jsdelivr.net/npm/notiflix@2.6.0/dist/notiflix-aio-2.6.0.min.js"></script>
-
-<script>
-    var position = "left-bottom";
-    var color = "verde";
-    var animation = "from-left";
-    var product_name = "";
-    var timeout = 4000;
-    var type_name = "fem";
-    var msg_final = "";
-
-    var names_fem = [
-        'João', 'Manuel', 'Paulo', 'Carlos', 'Pedro', 'José', 'António',
-        'Filipe', 'Domingos', 'Miguel', 'Mateus', 'Daniel', 'Jorge',
-        'Adilson', 'Edson', 'Emanuel', 'Geraldo', 'Luís', 'Fernando',
-        'Kazumbula', 'Osvaldo', 'Valter', 'Maurício', 'Tomás', 'César',
-        'Ana', 'Antónia', 'Adriana', 'Juliana', 'Márcia', 'Fernanda',
-        'Patrícia', 'Camila', 'Bruna', 'Jéssica', 'Luciana', 'Mariana',
-        'Vitória', 'Cláudia'
-    ];
-
-    var option = {
-        position: position,
-        cssAnimationStyle: animation,
-        plainText: false,
-        timeout: timeout
-    };
-
-    function gerarValor() {
-        // Gera valor entre 100000 e 160000
-        return Math.floor(Math.random() * (160000 - 100000 + 1)) + 100000;
-    }
-
-    function formatarKz(valor) {
-        return valor.toLocaleString('pt-PT') + " kz";
-    }
-
-    function show_notification() {
-        var nome = names_fem[Math.floor(Math.random() * names_fem.length)];
-        var valor = formatarKz(gerarValor());
-
-        msg_final = "<strong>" + nome + "</strong> sacou agora " + valor + " " + product_name;
-
-        if (color == "verde") {
-            Notiflix.Notify.Success(msg_final, option);
-        }
-
-        if (color == "azul") {
-            Notiflix.Notify.Info(msg_final, option);
-        }
-
-        if (color == "vermelho") {
-            Notiflix.Notify.Failure(msg_final, option);
-        }
-
-        if (color == "amarelo") {
-            Notiflix.Notify.Warning(msg_final, option);
-        }
-
-        setTimeout(show_notification, 10000);
-    }
-
-    // Primeira notificação imediata
-    setTimeout(show_notification, 1000);
 </script>
 
 </body>
