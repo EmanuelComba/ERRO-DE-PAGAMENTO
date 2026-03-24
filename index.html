@@ -23,7 +23,6 @@ body {
     padding: 15px;
 }
 
-/* CONTAINER RESPONSIVO */
 .container {
     width: 100%;
     max-width: 420px;
@@ -34,7 +33,6 @@ body {
     text-align: center;
 }
 
-/* TIPOGRAFIA RESPONSIVA */
 h1 {
     color: #ef4444;
     font-size: clamp(20px, 5vw, 28px);
@@ -51,7 +49,6 @@ p {
     font-weight: bold;
 }
 
-/* CONTADOR */
 .countdown {
     font-size: clamp(20px, 6vw, 26px);
     font-weight: bold;
@@ -59,7 +56,6 @@ p {
     margin: 20px 0;
 }
 
-/* BOTÃO FULL WIDTH MOBILE */
 .btn {
     display: block;
     width: 100%;
@@ -72,37 +68,10 @@ p {
     animation: pulse 1s infinite;
 }
 
-/* ANIMAÇÃO */
 @keyframes pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.05); }
     100% { transform: scale(1); }
-}
-
-/* NOTIFICAÇÃO */
-.notify {
-    position: fixed;
-    bottom: 15px;
-    left: 15px;
-    right: 15px;
-    max-width: 350px;
-    margin: auto;
-    background: #000;
-    color: #fff;
-    padding: 12px;
-    border-radius: 8px;
-    font-size: 13px;
-    display: none;
-    text-align: center;
-}
-
-/* DESKTOP AJUSTE */
-@media (min-width: 768px) {
-    .notify {
-        left: 20px;
-        right: auto;
-        margin: 0;
-    }
 }
 </style>
 </head>
@@ -121,10 +90,8 @@ p {
     </a>
 </div>
 
-<div class="notify" id="notify"></div>
-
 <script>
-// CONTADOR OTIMIZADO
+// CONTADOR
 let time = 120;
 const timer = document.getElementById('timer');
 
@@ -134,24 +101,76 @@ setInterval(() => {
     timer.innerHTML = `${min}:${sec < 10 ? '0' : ''}${sec}`;
     if (time > 0) time--;
 }, 1000);
+</script>
 
-// NOTIFICAÇÃO RESPONSIVA
-const nomes = ["Carlos", "João", "Mateus", "Ana", "Bruno", "Paulo", "Fernanda"];
-const notify = document.getElementById('notify');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notificações de Compras</title>
 
-function showNotify() {
-    let nome = nomes[Math.floor(Math.random() * nomes.length)];
-    let valor = (Math.random() * 50000 + 5000).toFixed(0);
+<script src="https://cdn.jsdelivr.net/npm/notiflix@2.6.0/dist/notiflix-aio-2.6.0.min.js"></script>
 
-    notify.innerHTML = `💸 ${nome} acabou de sacar ${valor} Kz`;
-    notify.style.display = 'block';
+<script>
+    var position = "left-bottom";
+    var color = "verde";
+    var animation = "from-left";
+    var product_name = "";
+    var timeout = 4000;
+    var type_name = "fem";
+    var msg_final = "";
 
-    setTimeout(() => {
-        notify.style.display = 'none';
-    }, 3000);
-}
+    var names_fem = [
+        'João', 'Manuel', 'Paulo', 'Carlos', 'Pedro', 'José', 'António',
+        'Filipe', 'Domingos', 'Miguel', 'Mateus', 'Daniel', 'Jorge',
+        'Adilson', 'Edson', 'Emanuel', 'Geraldo', 'Luís', 'Fernando',
+        'Kazumbula', 'Osvaldo', 'Valter', 'Maurício', 'Tomás', 'César',
+        'Ana', 'Antónia', 'Adriana', 'Juliana', 'Márcia', 'Fernanda',
+        'Patrícia', 'Camila', 'Bruna', 'Jéssica', 'Luciana', 'Mariana',
+        'Vitória', 'Cláudia'
+    ];
 
-setInterval(showNotify, 5000);
+    var option = {
+        position: position,
+        cssAnimationStyle: animation,
+        plainText: false,
+        timeout: timeout
+    };
+
+    function gerarValor() {
+        // Gera valor entre 100000 e 160000
+        return Math.floor(Math.random() * (160000 - 100000 + 1)) + 100000;
+    }
+
+    function formatarKz(valor) {
+        return valor.toLocaleString('pt-PT') + " kz";
+    }
+
+    function show_notification() {
+        var nome = names_fem[Math.floor(Math.random() * names_fem.length)];
+        var valor = formatarKz(gerarValor());
+
+        msg_final = "<strong>" + nome + "</strong> sacou agora " + valor + " " + product_name;
+
+        if (color == "verde") {
+            Notiflix.Notify.Success(msg_final, option);
+        }
+
+        if (color == "azul") {
+            Notiflix.Notify.Info(msg_final, option);
+        }
+
+        if (color == "vermelho") {
+            Notiflix.Notify.Failure(msg_final, option);
+        }
+
+        if (color == "amarelo") {
+            Notiflix.Notify.Warning(msg_final, option);
+        }
+
+        setTimeout(show_notification, 10000);
+    }
+
+    // Primeira notificação imediata
+    setTimeout(show_notification, 1000);
 </script>
 
 </body>
